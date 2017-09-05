@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Untitled Document</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <dib>Male - Cat Details:</div>
+      <div id="male-cat-details" style="margin-left:20px;"></div>
+ 
+	<br />
+    <div>Female - Cat Details:</div> 
+     <div id="female-cat-details" style="margin-left:20px;"></div>
+        
+
+    <script>
+        //http://agl-developer-test.azurewebsites.net/people.json
+        $(document).ready(function() {
+
+            var url = "http://agl-developer-test.azurewebsites.net/people.json";
+
+            var MaleCatDetails = [];
+            MaleCatDetails['Male'] = [];
+            var FemaleCatDetails = [];
+            FemaleCatDetails['Female'] = [];
+
+            $.getJSON(url, function(data) {
+
+                $.each(data, function(index, ele) {
+                    if (ele.pets !== null && ele.gender == 'Male') {
+                        $.each(ele.pets, function(i, el) {
+                            if (el.type == 'Cat')
+                                MaleCatDetails.Male.push(el.name);
+                        });
+                    }
+                    if (ele.pets !== null && ele.gender == 'Female') {
+                        $.each(ele.pets, function(i, el) {
+                            if (el.type == 'Cat')
+                                FemaleCatDetails.Female.push(el.name);
+                        });
+                    }
+                })
+                // append result
+                $('#male-cat-details').append(MaleCatDetails.Male.sort().join('<br/>'));
+                $('#female-cat-details').append(FemaleCatDetails.Female.sort().join('<br/>'));
+
+            });
+
+        });
+    </script>
+
+
+
+</body>
+
+</html>
